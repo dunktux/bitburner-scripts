@@ -382,7 +382,7 @@ async function deletePrompt(ns, cloudServers)
     (
     (deleteOperation ?
     "Successfully deleted " + serverToDelete :
-    "Failed to delete " + serverToDelete) +
+    "Failed to delete " + serverToDelete + "\nA script may be running on the server") +
     "\n\nReturn to main menu?"
     );
 
@@ -405,6 +405,7 @@ async function ramPrompt(ns, promptMods = "")
     
     let ramLimit = ns.cloud.getRamLimit();
     if (ramPromptResults == "") return;
+    if (ramPromptResults.toLowerCase() == "max") return ns.cloud.getRamLimit();
     if (!isNumeric(ramPromptResults)) return await ramPrompt(ns, "You must enter a number!");
     if (ramAmount < 0) return await ramPrompt(ns, "You must enter a positive number!");
     if (ramAmount > ramLimit) return await ramPrompt(ns, "The RAM limit per server is " + ramLimit + " GB");
